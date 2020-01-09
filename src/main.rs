@@ -7,6 +7,12 @@ struct Pixel {
     g: u8,
     b: u8,
 }
+#[derive(Clone, Default, Debug)]
+struct Image {
+    width: u32,
+    height: u32,
+    content: Vec<Pixel>
+}
 
 fn main() { 
     let matches = App::new("ppm")
@@ -28,6 +34,15 @@ fn main() {
     } else {
         // Test Pixel struct
         let pixel = Pixel { r: 42, ..Default::default() };
+
         println!("{:?}",pixel);
+
+        // Test Image struct
+        let pixel2 = Pixel { r: 43, ..Default::default() };
+        let mut image = Image { width:242, content: vec![], ..Default::default() };
+        image.content.push(pixel);
+        image.content.push(pixel2);
+
+        println!("{:?}",image);
     }
 }
