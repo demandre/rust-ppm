@@ -1,6 +1,13 @@
 extern crate clap; 
 use clap::{Arg, App};
- 
+
+#[derive(Copy, Clone, Default)]
+struct Pixel {
+    r: u8,
+    g: u8,
+    b: u8,
+}
+
 fn main() { 
     let matches = App::new("ppm")
        .version("1.0")
