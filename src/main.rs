@@ -1,7 +1,7 @@
 extern crate clap; 
 use clap::{Arg, App};
 
-#[derive(Copy, Clone, Default)]
+#[derive(Clone, Default, Debug)]
 struct Pixel {
     r: u8,
     g: u8,
@@ -19,10 +19,15 @@ fn main() {
             .value_name("INPUT_PPM_FILE")
             .help("Sets input file")
             .takes_value(true)
-            .required(true))
+            .required(false))
        .get_matches(); 
+    let input = matches.value_of("in");
 
-    let input = matches.value_of("in").unwrap();
-
-    println!("{}",input);
+    if input != None {
+        println!("{}",input.unwrap());
+    } else {
+        // Test Pixel struct
+        let pixel = Pixel { r: 42, ..Default::default() };
+        println!("{:?}",pixel);
+    }
 }
