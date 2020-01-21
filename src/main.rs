@@ -1,4 +1,6 @@
-extern crate clap; 
+extern crate clap;
+mod ppma_wrapper;
+
 use clap::{Arg, App};
 
 #[derive(Clone, Default, Debug)]
@@ -15,7 +17,7 @@ struct Image {
 }
 
 fn main() { 
-    let matches = App::new("ppm")
+    /*let matches = App::new("ppm")
        .version("1.0")
        .about("PPM utility")
        .author("Demandre J.")
@@ -44,5 +46,6 @@ fn main() {
         image.content.push(pixel2);
 
         println!("{:?}",image);
-    }
+    }*/
+    ppma_wrapper::create_example_ppm_wrapper(10, 10);
 }
