@@ -1,20 +1,9 @@
 extern crate clap;
+
 mod ppma_wrapper;
 
 use clap::{Arg, App};
 
-#[derive(Clone, Default, Debug)]
-struct Pixel {
-    r: u8,
-    g: u8,
-    b: u8,
-}
-#[derive(Clone, Default, Debug)]
-struct Image {
-    width: u32,
-    height: u32,
-    content: Vec<Pixel>
-}
 
 fn main() { 
     /*let matches = App::new("ppm")
@@ -47,5 +36,6 @@ fn main() {
 
         println!("{:?}",image);
     }*/
-    ppma_wrapper::create_example_ppm_wrapper(10, 10);
+    let image_test = ppma_wrapper::create_example_ppm_wrapper(10, 10);
+    ppma_wrapper::ppma_write_wrapper(String::from("test.ppm"), image_test);
 }
