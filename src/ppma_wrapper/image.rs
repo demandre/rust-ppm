@@ -41,8 +41,13 @@ impl Pixel {
     }
 }
 
-pub trait Invert {
+pub trait Invertable {
     fn invert(&mut self);
+}
+
+pub trait Grayscalable {
+    fn grayscale(&mut self);
+    fn grayscale_luma(&mut self);
 }
 
 #[derive(Clone, Default, Debug)]
@@ -82,12 +87,32 @@ impl Image {
     }
 }
 
-impl Invert for Image {
+impl Invertable for Image {
     fn invert(&mut self) {
         for mut pixel in &mut self.content {
             pixel.r = 255-pixel.r;
             pixel.g = 255-pixel.g;
             pixel.b = 255-pixel.b;
+        }
+    }
+}
+
+impl Grayscalable for Image {
+    fn grayscale(&mut self) {
+        for mut pixel in &mut self.content {
+            let average = pixel.r/3 + pixel.g/3 + pixel.b/3;
+            pixel.r = average;
+            pixel.g = average;
+            pixel.b = average;
+        }
+    }
+
+    fn grayscale_luma(&mut self) {
+        for mut pixel in &mut self.content {
+            let average = pixel.r as f32 *0.3 + pixel.g as f32 *0.59 + pixel.b as f32 *0.11;
+            pixel.r = average as u8;
+            pixel.g = average as u8;
+            pixel.b = average as u8;
         }
     }
 }
