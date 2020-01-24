@@ -41,6 +41,10 @@ impl Pixel {
     }
 }
 
+pub trait Invert {
+    fn invert(&mut self);
+}
+
 #[derive(Clone, Default, Debug)]
 pub struct Image {
     pub width: u32,
@@ -75,6 +79,16 @@ impl Image {
             b.push(pixel.b as c_int);
         }
         (r, g, b)
+    }
+}
+
+impl Invert for Image {
+    fn invert(&mut self) {
+        for mut pixel in &mut self.content {
+            pixel.r = 255-pixel.r;
+            pixel.g = 255-pixel.g;
+            pixel.b = 255-pixel.b;
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 extern crate clap;
 
 mod ppma_wrapper;
+use ppma_wrapper::image::Invert;
 
 use clap::{Arg, App};
 
@@ -38,4 +39,8 @@ fn main() {
     }*/
     let image_test = ppma_wrapper::create_example_ppm_wrapper(10, 10);
     ppma_wrapper::ppma_write_wrapper(String::from("test.ppm"), image_test);
+
+    let mut image_test_to_invert = ppma_wrapper::create_example_ppm_wrapper(10, 10);
+    image_test_to_invert.invert();
+    ppma_wrapper::ppma_write_wrapper(String::from("testInverted.ppm"), image_test_to_invert);
 }

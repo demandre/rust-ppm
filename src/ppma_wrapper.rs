@@ -1,8 +1,8 @@
 extern crate libc;
 use libc::{c_int, c_char};
 
-mod image;
-use image::Image;
+pub mod image;
+pub use image::Image;
 
 use std::ffi::CString;
 
