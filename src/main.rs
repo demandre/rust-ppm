@@ -36,6 +36,8 @@ fn main() {
 
         println!("{:?}",image);
     }*/
-    let image_test = ppma_wrapper::create_example_ppm_wrapper(10, 10);
+    let image_test = ppma_wrapper::create_example_ppm_wrapper(100, 100);
     ppma_wrapper::ppma_write_wrapper(String::from("test.ppm"), image_test);
+    let read_test = ppma_wrapper::ppma_read_wrapper(String::from("test.ppm"));
+    ppma_wrapper::ppma_write_wrapper(String::from("read.ppm"), read_test);
 }
