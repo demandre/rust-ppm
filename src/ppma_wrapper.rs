@@ -16,9 +16,25 @@ extern {
 }
 
 macro_rules! retrieve {
-    ($size : expr; $($x : expr), *) => {
+    ($size : expr; $($x : expr),*) => {
         $(
             $x.set_len($size);
+        )*
+    }
+}
+
+macro_rules! push {
+    ($($elem : expr),* ; $($vector : expr),*) => {
+        $(
+            $vector.push($elem);
+        )*
+    }
+}
+
+macro_rules! offset {
+    ($($p : expr),*) => {
+        $(
+            $p = $p.offset(1);
         )*
     }
 }
@@ -60,13 +76,11 @@ pub fn ppma_write_wrapper(file_out_name : String, image : Image) {
     }
 }
 
-pub fn ppma_read_wrapper(input_name : String) -> Image{
-    let mut x : Vec<c_int> = Vec::with_capacity(1);
-    let mut y : Vec<c_int> = Vec::with_capacity(1);
-    let mut rgb_max : Vec<c_int> = Vec::with_capacity(1);
-    let mut r : Vec<*mut c_int> = Vec::with_capacity(1);
-    let mut g : Vec<*mut c_int> = Vec::with_capacity(1);
-    let mut b : Vec<*mut c_int> = Vec::with_capacity(1);
+pub fn ppma_read_wrapper(input_name : String) -> Image {
+    let (mut x, mut y, mut rgb_max) = init_r_g_b(1);
+    let mut r = Vec::with_capacity(1);
+    let mut g = Vec::with_capacity(1);
+    let mut b = Vec::with_capacity(1);
     let mut vec_r : Vec<c_int> = vec![];
     let mut vec_g : Vec<c_int> = vec![];
     let mut vec_b : Vec<c_int> = vec![];
@@ -85,13 +99,9 @@ pub fn ppma_read_wrapper(input_name : String) -> Image{
         let mut p_r = r[0];
         let mut p_g = g[0];
         let mut p_b = b[0];
-        for i in 0..size {
-            vec_r.push(*p_r);
-            vec_g.push(*p_g);
-            vec_b.push(*p_b);
-            p_r = p_r.offset(1);
-            p_b = p_b.offset(1);
-            p_g = p_g.offset(1);
+        for _i in 0..size {
+            push!(*p_r, *p_g, *p_b; vec_r, vec_g, vec_b);
+            offset!(p_r, p_b, p_g);
         }
     }
     Image::from_r_g_b(vec_r, vec_g, vec_b, x[0] as u32, y[0] as u32)
