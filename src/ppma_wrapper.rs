@@ -2,10 +2,12 @@ extern crate libc;
 use libc::{c_int, c_char};
 
 pub mod image;
-pub use image::Image;
+pub use image::{Image, Pixel};
+
+pub mod threadpool;
+pub use threadpool::ThreadPool;
 
 use std::ffi::CString;
-use std::ptr;
 
 
 #[link(name = "ppma_io")]
@@ -59,7 +61,7 @@ pub fn create_example_ppm_wrapper(xsize : i32, ysize : i32) -> Image {
         );
         retrieve!(size; r, g, b);
     }
-    Image::from_r_g_b(r, g, b, xsize as u32, ysize as u32)
+    Image::from_r_g_b(r, g, b, xsize as usize, ysize as usize)
 }
 
 pub fn ppma_write_wrapper(file_out_name : String, image : Image) {
@@ -104,5 +106,14 @@ pub fn ppma_read_wrapper(input_name : String) -> Image {
             offset!(p_r, p_b, p_g);
         }
     }
-    Image::from_r_g_b(vec_r, vec_g, vec_b, x[0] as u32, y[0] as u32)
+    Image::from_r_g_b(vec_r, vec_g, vec_b, x[0] as usize, y[0] as usize)
+}
+
+pub fn invert(image: Image) {
+    let pool = ThreadPool::new(10);
+    for line in image.content.chunks(image.width) {
+        pool.execute(move || {
+            println!("{:?}", line);
+        });
+    }
 }
