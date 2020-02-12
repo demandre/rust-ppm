@@ -8,6 +8,7 @@ pub mod threadpool;
 pub use threadpool::ThreadPool;
 
 use std::ffi::CString;
+use std::sync::{Arc, Mutex};
 
 
 #[link(name = "ppma_io")]
@@ -109,11 +110,17 @@ pub fn ppma_read_wrapper(input_name : String) -> Image {
     Image::from_r_g_b(vec_r, vec_g, vec_b, x[0] as usize, y[0] as usize)
 }
 
-pub fn invert(image: Image) {
-    let pool = ThreadPool::new(10);
+/*pub fn invert(td_image : &Arc<Mutex<Image>>, part : i32, pool : ThreadPool) {
+    let td_image = td_image.clone();
+    let mut count = 0;
+    let mut image = td_image.lock().unwrap();
     for line in image.content.chunks(image.width) {
-        pool.execute(move || {
-            println!("{:?}", line);
-        });
+        if (count % part != 0) {
+            pool.execute(move || {
+                println!("{:?}", line);
+            });
+        }
+        count += 1;
     }
-}
+}*/
+

@@ -62,6 +62,8 @@ impl ThreadPool {
     }
 }
 
+unsafe impl Sync for ThreadPool {}
+
 struct Worker {
     id: usize,
     thread: Option<thread::JoinHandle<()>>,
