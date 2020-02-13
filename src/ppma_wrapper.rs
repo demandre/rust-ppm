@@ -39,6 +39,17 @@ macro_rules! offset {
     }
 }
 
+/// Initialize 3 vectors with size
+///
+/// # Arguments:
+/// * `size` : size to book
+///
+/// # Example:
+///
+/// ```
+/// use ppma_wrapper;
+/// let (mut r, mut g, mut b) = init_r_g_b(1 as usize);
+/// ```
 fn init_r_g_b(size : usize) -> (Vec<c_int>, Vec<c_int>, Vec<c_int>){
     let r = Vec::with_capacity(size);
     let g = Vec::with_capacity(size);
@@ -46,6 +57,18 @@ fn init_r_g_b(size : usize) -> (Vec<c_int>, Vec<c_int>, Vec<c_int>){
     (r, g, b)
 }
 
+/// Create an example ppm image
+///
+/// # Arguments:
+/// * `xsize` : image width
+/// * `ysize` : image height
+///
+/// # Example:
+///
+/// ```
+/// use ppma_wrapper;
+/// ppma_wrapper::create_example_ppm_wrapper(5, 5);
+/// ```
 pub fn create_example_ppm_wrapper(xsize : i32, ysize : i32) -> Image {
     let size = (xsize * ysize) as usize;
     let (mut r, mut g, mut b) = init_r_g_b(size);
@@ -62,6 +85,19 @@ pub fn create_example_ppm_wrapper(xsize : i32, ysize : i32) -> Image {
     Image::from_r_g_b(r, g, b, xsize as u32, ysize as u32)
 }
 
+/// Create a ppm file
+///
+/// # Arguments:
+/// * `file_out_name` : name of the file to create
+/// * `image` : image to write
+///
+/// # Example:
+///
+/// ```
+/// use ppma_wrapper;
+/// let image = ppma_wrapper::create_example_ppm_wrapper(2, 2);
+/// ppma_wrapper::ppma_write_wrapper("test.ppm", image);
+/// ```
 pub fn ppma_write_wrapper(file_out_name : String, image : Image) {
     let (r, g, b) = Image::to_r_g_b(&image);
     unsafe {
@@ -76,6 +112,17 @@ pub fn ppma_write_wrapper(file_out_name : String, image : Image) {
     }
 }
 
+/// Read a ppm file
+///
+/// # Arguments:
+/// * `input_name` : ppm file name
+///
+/// # Example:
+///
+/// ```
+/// use ppma_wrapper;
+/// let image = ppma_read_wrapper("test.ppm");
+/// ```
 pub fn ppma_read_wrapper(input_name : String) -> Image {
     let (mut x, mut y, mut rgb_max) = init_r_g_b(1);
     let mut r = Vec::with_capacity(1);
