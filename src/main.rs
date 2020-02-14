@@ -9,7 +9,7 @@ fn main() {
     let matches = App::new("ppm")
        .version("1.0")
        .about("PPM utility")
-       .author("Demandre J.")
+       .author("Wang A., Delmer P., Uyar E., Demandre J.")
        .arg(Arg::with_name("in")
             .short("in")
             .long("in")
