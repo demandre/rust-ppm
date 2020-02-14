@@ -17,11 +17,31 @@ fn main() {
             .help("Sets input file")
             .takes_value(true)
             .required(false))
+       .arg(Arg::with_name("out-prefix")
+            .short("out-prefix")
+            .long("out-prefix")
+            .value_name("OUTPUT_PPM_FILE_PREFIX")
+            .help("Sets output file prefix")
+            .takes_value(true)
+            .required(false))
        .get_matches(); 
+
     let input = matches.value_of("in");
+    let output_prefix = matches.value_of("out-prefix");
 
     if input != None {
-        println!("{}",input.unwrap());
+        println!("opening {} image",input.unwrap());
+        
+        let mut image = ppma_wrapper::ppma_read_wrapper(String::from(input.unwrap()));
+        ppma_wrapper::ppma_write_wrapper(String::from(output_prefix.unwrap().to_owned() + ".ppm"), image.clone());
+
+        let mut inverted_image = image.clone();
+        inverted_image.invert();    
+        ppma_wrapper::ppma_write_wrapper(String::from(output_prefix.unwrap().to_owned() + "Inverted.ppm"), inverted_image);
+
+        let mut grayscaled_image = image.clone();
+        grayscaled_image.grayscale_luma();    
+        ppma_wrapper::ppma_write_wrapper(String::from(output_prefix.unwrap().to_owned() + "Grayscaled.ppm"), grayscaled_image);
     } else {
         testLibraries();
     }
