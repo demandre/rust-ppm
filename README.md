@@ -9,8 +9,10 @@ More informations here:
  - https://doc.rust-lang.org/cargo/
  - https://www.rust-lang.org/tools/install 
  
+You also need python 3 in order to use the library
+ 
 ## COMPILING
-You can compile the project with this command: `cargo build`
+You can compile the project with this command: `cargo build --release`
 
 ## CLI
 
@@ -36,6 +38,20 @@ OPTIONS:
 
 ## PYTHON LIBRARY
 
-The library provides tool for reading and writing ppm files.
+The library provides tool for reading, writing, grayscaling and inverting ppm files.
 
-You can use it like it's used in [embed.py](https://github.com/demandre/rust-ppm/blob/feature/ImageModifications/embed.py)
+You can use it by compiling and then using the target/release/libppm.so
+
+You can also find an example of usage here : [python_demo](https://github.com/demandre/rust-ppm/tree/master/python_demo)
+This is the help output of the python demo script - which describe well how it can be used - :
+```
+usage: ppm.py [-h] -x X -y Y -n NAME
+
+Create an X by Y ppm image file, its grayscaled and inverted version
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -x X                  Image width
+  -y Y                  Image height
+  -n NAME, --name NAME  Name of the file to create without file extension
+```
