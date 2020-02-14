@@ -17,3 +17,10 @@ cc = "1.0"
 [lib]
 name = "ppm"
 crate-type = ["dylib"] # could be `staticlib` as well
+
+[dev-dependencies]
+criterion = "0.3"
+
+[[bench]]
+name = "ppma_benchmark"
+harness = false
