@@ -22,3 +22,10 @@ crate-type = ["cdylib"]
 [dependencies.pyo3]
 version = "0.9.0-alpha.1"
 features = ["extension-module"]
+
+[dev-dependencies]
+criterion = "0.3"
+
+[[bench]]
+name = "ppma_benchmark"
+harness = false
