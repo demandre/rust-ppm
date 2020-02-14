@@ -2,4 +2,5 @@ from ctypes import cdll
 
 lib = cdll.LoadLibrary("target/debug/libppm.dylib")
 
-print(lib.dummy())
+image = lib.read_ppm("test.ppm")
+print(image)
