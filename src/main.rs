@@ -32,7 +32,7 @@ fn main() {
     if input != None {
         println!("opening {} image",input.unwrap());
         
-        let mut image = ppma_wrapper::ppma_read_wrapper(String::from(input.unwrap()));
+        let image = ppma_wrapper::ppma_read_wrapper(String::from(input.unwrap()));
         ppma_wrapper::ppma_write_wrapper(String::from(output_prefix.unwrap().to_owned() + ".ppm"), image.clone());
 
         let mut inverted_image = image.clone();
@@ -43,12 +43,12 @@ fn main() {
         grayscaled_image.grayscale_luma();    
         ppma_wrapper::ppma_write_wrapper(String::from(output_prefix.unwrap().to_owned() + "Grayscaled.ppm"), grayscaled_image);
     } else {
-        testLibraries();
+        test_libraries();
     }
 }
 
-fn testLibraries() {
-    let mut image = ppma_wrapper::create_example_ppm_wrapper(1000, 1000);
+fn test_libraries() {
+    let image = ppma_wrapper::create_example_ppm_wrapper(1000, 1000);
     ppma_wrapper::ppma_write_wrapper(String::from("test.ppm"), image.clone());
 
     let mut image_test_to_invert = image.clone();

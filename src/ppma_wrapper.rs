@@ -6,7 +6,6 @@ pub mod image;
 pub use image::Image;
 
 use std::ffi::CString;
-use std::ptr;
 
 
 #[link(name = "ppma_io")]

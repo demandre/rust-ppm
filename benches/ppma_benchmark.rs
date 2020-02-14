@@ -1,12 +1,12 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
 
 #[path = "../src/ppma_wrapper.rs"]
 mod ppma_wrapper;
 use ppma_wrapper::image::Invertable;
 use ppma_wrapper::image::Grayscalable;
 
-fn testLibraries() {
-    let mut image = ppma_wrapper::create_example_ppm_wrapper(100, 100);
+fn test_libraries() {
+    let image = ppma_wrapper::create_example_ppm_wrapper(100, 100);
     ppma_wrapper::ppma_write_wrapper(String::from("test.ppm"), image.clone());
 
     let mut image_test_to_invert = image.clone();
@@ -20,7 +20,7 @@ fn testLibraries() {
 
 
 fn criterion_benchmark(c: &mut Criterion) {
-    c.bench_function("testLibraries", |b| b.iter(|| testLibraries()));
+    c.bench_function("test_libraries", |b| b.iter(|| test_libraries()));
 }
 
 criterion_group!(benches, criterion_benchmark);
