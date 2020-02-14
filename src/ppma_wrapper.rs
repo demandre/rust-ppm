@@ -2,10 +2,9 @@ extern crate libc;
 use libc::{c_int, c_char};
 
 pub mod image;
-pub use image::Image;
+pub use image::{Image, Invertable, Grayscalable};
 
 use std::ffi::CString;
-use std::ptr;
 
 
 #[link(name = "ppma_io")]
@@ -152,4 +151,14 @@ pub fn ppma_read_wrapper(input_name : String) -> Image {
         }
     }
     Image::from_r_g_b(vec_r, vec_g, vec_b, x[0] as u32, y[0] as u32)
+}
+
+pub fn invert(mut img : Image) -> Image {
+    img.invert();
+    img
+}
+
+pub fn grayscale(mut img : Image) -> Image {
+    img.grayscale();
+    img
 }

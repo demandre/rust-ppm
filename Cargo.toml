@@ -10,10 +10,15 @@ build = "build.rs"
 clap = "2.33.0"
 libc = "0.2"
 itertools = "0.8"
+dict_derive = "0.2.0"
 
 [build-dependencies]
 cc = "1.0"
 
 [lib]
 name = "ppm"
-crate-type = ["dylib"] # could be `staticlib` as well
+crate-type = ["cdylib"]
+
+[dependencies.pyo3]
+version = "0.9.0-alpha.1"
+features = ["extension-module"]

@@ -4,11 +4,14 @@ use libc::c_int;
 extern crate itertools;
 use itertools::izip;
 
+extern crate dict_derive;
+use dict_derive::{FromPyObject, IntoPyObject};
+
 /// RGB pixel struct : 
 /// * r : byte for red
 /// * g : byte for green
 /// * b : byte for blue
-#[derive(Clone, Default, Debug, Copy)]
+#[derive(Clone, Default, Debug, Copy, FromPyObject, IntoPyObject)]
 pub struct Pixel {
     r: u8,
     g: u8,
@@ -52,7 +55,7 @@ pub trait Grayscalable {
 /// * width: image width
 /// * height: image height
 /// * content: image pixels
-#[derive(Clone, Default, Debug)]
+#[derive(Clone, Default, Debug, FromPyObject, IntoPyObject)]
 pub struct Image {
     pub width: u32,
     pub height: u32,
