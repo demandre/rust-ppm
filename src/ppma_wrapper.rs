@@ -1,6 +1,7 @@
 extern crate libc;
 use libc::{c_int, c_char};
 
+#[path = "ppma_wrapper/image.rs"]
 pub mod image;
 pub use image::Image;
 

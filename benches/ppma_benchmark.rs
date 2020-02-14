@@ -1,15 +1,26 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
-fn fibonacci(n: u64) -> u64 {
-    match n {
-        0 => 1,
-        1 => 1,
-        n => fibonacci(n-1) + fibonacci(n-2),
-    }
+#[path = "../src/ppma_wrapper.rs"]
+mod ppma_wrapper;
+use ppma_wrapper::image::Invertable;
+use ppma_wrapper::image::Grayscalable;
+
+fn testLibraries() {
+    let mut image = ppma_wrapper::create_example_ppm_wrapper(100, 100);
+    ppma_wrapper::ppma_write_wrapper(String::from("test.ppm"), image.clone());
+
+    let mut image_test_to_invert = image.clone();
+    image_test_to_invert.invert();
+    ppma_wrapper::ppma_write_wrapper(String::from("testInverted.ppm"), image_test_to_invert);
+
+    let mut image_test_to_grayscale = image.clone();
+    image_test_to_grayscale.grayscale_luma();
+    ppma_wrapper::ppma_write_wrapper(String::from("testGreyscaled.ppm"), image_test_to_grayscale);
 }
 
+
 fn criterion_benchmark(c: &mut Criterion) {
-    c.bench_function("fib 20", |b| b.iter(|| fibonacci(black_box(20))));
+    c.bench_function("testLibraries", |b| b.iter(|| testLibraries()));
 }
 
 criterion_group!(benches, criterion_benchmark);
